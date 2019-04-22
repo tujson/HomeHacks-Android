@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="dev.synople.homehacks.auditor.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="dev.synople.homehacks.auditor.fragments.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar">
+        <action
+            android:id="@+id/action_calendarFragment_to_scheduleAuditFragment"
+            app:destination="@id/scheduleAuditFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_viewAuditFragment"
+            app:destination="@id/viewAuditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="dev.synople.homehacks.auditor.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/scheduleAuditFragment"
+        android:name="dev.synople.homehacks.auditor.fragments.ScheduleAuditFragment"
+        android:label="fragment_schedule_audit"
+        tools:layout="@layout/fragment_schedule_audit">
+        <action
+            android:id="@+id/action_scheduleAuditFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewAuditFragment"
+        android:name="dev.synople.homehacks.auditor.fragments.ViewAuditFragment"
+        android:label="fragment_view_audit"
+        tools:layout="@layout/fragment_view_audit">
+        <action
+            android:id="@+id/action_viewAuditFragment_to_surveyFragment"
+            app:destination="@id/surveyFragment" />
+        <argument
+            android:name="audit"
+            app:argType="dev.synople.homehacks.common.models.Audit" />
+        <action
+            android:id="@+id/action_viewAuditFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyFragment"
+        android:name="dev.synople.homehacks.auditor.fragments.SurveyFragment"
+        android:label="fragment_survey"
+        tools:layout="@layout/fragment_survey">
+        <action
+            android:id="@+id/action_surveyFragment_to_viewAuditFragment"
+            app:destination="@id/viewAuditFragment" />
+        <argument
+            android:name="audit"
+            app:argType="dev.synople.homehacks.common.models.Audit" />
+    </fragment>
+</navigation>

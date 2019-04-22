@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="dev.synople.homehacks.homeowner.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_auditFragment"
+            app:destination="@id/auditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="dev.synople.homehacks.homeowner.fragments.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_auditFragment"
+            app:destination="@id/auditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="dev.synople.homehacks.homeowner.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="dev.synople.homehacks.homeowner.fragments.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/auditFragment"
+        android:name="dev.synople.homehacks.homeowner.fragments.AuditFragment"
+        android:label="fragment_audit"
+        tools:layout="@layout/fragment_audit" />
+</navigation>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.SurveyFragment">
+
+    <RelativeLayout
+        android:id="@+id/rlHeader"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="18dp"
+            android:elevation="5dp"
+            android:gravity="center_vertical"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/ivLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlHeader"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_chevron_left" />
+
+    <ImageView
+        android:id="@+id/ivRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlHeader"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/ic_chevron_right" />
+
+    <TextView
+        android:id="@+id/tvProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ivLeft"
+        android:layout_alignBottom="@id/ivLeft"
+        android:layout_toStartOf="@id/ivRight"
+        android:layout_toEndOf="@id/ivLeft"
+        android:gravity="center"
+        android:text="59/60"
+        android:textSize="18sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivLeft"
+        android:layout_alignStart="@id/ivLeft"
+        android:layout_alignEnd="@id/ivRight"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        android:max="60"
+        android:progress="90" />
+
+    <TextView
+        android:id="@+id/tvArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressBar"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="36dp"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvArea"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        android:textSize="42sp" />
+
+    <Button
+        android:id="@+id/btnYes"
+        style="@style/button.green"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvQuestion"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:text="Yes"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnNo"
+        style="@style/button.red"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnYes"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
+        android:text="No"
+        android:textAllCaps="false" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnNo"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="36dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Comments" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvLblImages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tilComments"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:text="Images" />
+
+</RelativeLayout>
