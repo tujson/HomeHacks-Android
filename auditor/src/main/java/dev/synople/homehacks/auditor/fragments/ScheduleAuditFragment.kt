@@ -34,6 +34,7 @@ class ScheduleAuditFragment : Fragment() {
                 .setPositiveButton("Yes") { _, _ ->
                     audit.auditorId = AppContext.user.id
                     audit.auditorName = AppContext.user.name
+
                     FirebaseFirestore.getInstance().collection("pendingAudits").document(audit.homeownerId)
                         .update("auditorId", AppContext.user.id, "auditorName", AppContext.user.name)
                         .addOnSuccessListener {

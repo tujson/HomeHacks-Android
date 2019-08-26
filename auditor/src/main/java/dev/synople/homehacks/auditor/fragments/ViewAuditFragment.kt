@@ -15,14 +15,23 @@ import dev.synople.homehacks.auditor.AppContext
 import dev.synople.homehacks.auditor.R
 import dev.synople.homehacks.common.models.Audit
 import kotlinx.android.synthetic.main.fragment_view_audit.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
+import kotlin.coroutines.CoroutineContext
 
-class ViewAuditFragment : Fragment() {
+class ViewAuditFragment : Fragment(), CoroutineScope {
 
     private val args: ViewAuditFragmentArgs by navArgs()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO
 
     private lateinit var audit: Audit
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) =
         inflater.inflate(R.layout.fragment_view_audit, container, false)!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,21 +50,39 @@ class ViewAuditFragment : Fragment() {
         btnStartAudit.setOnClickListener {
             if (audit.questions[0].answer.isNotEmpty()) {
                 AppContext.user.scheduledAudits.clear()
-                FirebaseFirestore.getInstance().collection("auditors").document(AppContext.user.id).set(AppContext.user)
-                    .addOnSuccessListener {
-                        FirebaseFirestore.getInstance().collection("pendingAudits").document(audit.homeownerId).delete()
-                            .addOnSuccessListener {
-                                FirebaseFirestore.getInstance().collection("audits").document(audit.homeownerId)
-                                    .collection("audits").document(audit.id).set(audit)
-                                    .addOnSuccessListener {
-                                        Navigation.findNavController(view)
-                                            .navigate(R.id.action_viewAuditFragment_to_calendarFragment)
-                                    }
-                            }
-                    }
+
+                launch {
+                    // TODO: Can we parallelize this?
+                    FirebaseFirestore.getInstance()
+                        .collection("auditors")
+                        .document(AppContext.user.id)
+                        .set(AppContext.user)
+                        .await()
+
+                    FirebaseFirestore.getInstance()
+                        .collection("pendingAudits")
+                        .document(audit.homeownerId)
+                        .delete()
+                        .await()
+
+                    FirebaseFirestore.getInstance()
+                        .collection("audits")
+                        .document(audit.homeownerId)
+                        .collection("audits")
+                        .document(audit.id)
+                        .set(audit)
+                        .await()
+
+                    Navigation.findNavController(view)
+                        .navigate(R.id.action_viewAuditFragment_to_calendarFragment)
+                }
             } else {
                 Navigation.findNavController(view)
-                    .navigate(ViewAuditFragmentDirections.actionViewAuditFragmentToSurveyFragment(audit))
+                    .navigate(
+                        ViewAuditFragmentDirections.actionViewAuditFragmentToSurveyFragment(
+                            audit
+                        )
+                    )
             }
         }
     }
