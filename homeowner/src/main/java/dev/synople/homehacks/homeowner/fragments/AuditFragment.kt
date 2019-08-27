@@ -42,49 +42,51 @@ class AuditFragment : Fragment() {
         // Setting up scheduler
         dateFormatter.timeZone = date.timeZone
         timeFormatter.timeZone = startTime.timeZone
-
-        btnDate.setOnClickListener {
-            DatePickerDialog(
-                context!!, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                    date.set(Calendar.YEAR, year)
-                    date.set(Calendar.MONTH, month)
-                    date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                    btnDate.text = dateFormatter.format(date.time)
-                },
-                date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH)
-            ).show()
-        }
-
-        btnStartTime.setOnClickListener {
-            TimePickerDialog(
-                context!!,
-                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                    startTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                    startTime.set(Calendar.MINUTE, minute)
-
-                    btnStartTime.text = timeFormatter.format(startTime.time)
-                },
-                startTime.get(Calendar.HOUR_OF_DAY),
-                startTime.get(Calendar.MINUTE),
-                false
-            ).show()
-        }
-
-        btnEndTime.setOnClickListener {
-            TimePickerDialog(
-                context!!,
-                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                    endTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                    endTime.set(Calendar.MINUTE, minute)
-
-                    btnEndTime.text = timeFormatter.format(endTime.time)
-                },
-                endTime.get(Calendar.HOUR_OF_DAY),
-                endTime.get(Calendar.MINUTE),
-                false
-            ).show()
-        }
+//
+//        btnDate.setOnClickListener {
+//            DatePickerDialog(
+//                context!!, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+//                    date.set(Calendar.YEAR, year)
+//                    date.set(Calendar.MONTH, month)
+//                    date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//
+//                    btnDate.text = dateFormatter.format(date.time)
+//                },
+//                date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH)
+//            ).show()
+//        }
+//
+//        tvStartTime.text = "9:00 AM"
+//        tvStartTime.setOnClickListener {
+//            TimePickerDialog(
+//                context!!,
+//                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+//                    startTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+//                    startTime.set(Calendar.MINUTE, minute)
+//
+//                    tvStartTime.text = timeFormatter.format(startTime.time)
+//                },
+//                startTime.get(Calendar.HOUR_OF_DAY),
+//                startTime.get(Calendar.MINUTE),
+//                false
+//            ).show()
+//        }
+//
+//        tvEndTime.text = "5:00 PM"
+//        tvEndTime.setOnClickListener {
+//            TimePickerDialog(
+//                context!!,
+//                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+//                    endTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+//                    endTime.set(Calendar.MINUTE, minute)
+//
+//                    tvEndTime.text = timeFormatter.format(endTime.time)
+//                },
+//                endTime.get(Calendar.HOUR_OF_DAY),
+//                endTime.get(Calendar.MINUTE),
+//                false
+//            ).show()
+//        }
 
         btnContinue.setOnClickListener {
             startTime.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH))
@@ -134,7 +136,7 @@ class AuditFragment : Fragment() {
                     }
                     disabled.visibility = View.VISIBLE
                 } ?: run {
-                    tvStatus.text = "You have no audits scheduled."
+                    tvStatus.text = "Schedule an audit"
                     disabled.visibility = View.GONE
                 }
 
