@@ -51,6 +51,7 @@
         <Button
             android:id="@+id/btnContinue"
             style="@style/button.green"
+            android:background="@color/lightGreen"
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
             android:textAllCaps="false"

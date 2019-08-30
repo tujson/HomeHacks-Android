@@ -1,8 +1,6 @@
 package dev.synople.homehacks.homeowner.fragments
 
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,7 +21,6 @@ import java.util.*
 class AuditFragment : Fragment() {
 
     private var audit: Audit? = null
-    private var availabilityAdapter: AvailabilityAdapter? = null
     private val date = Calendar.getInstance()
     private val startTime = Calendar.getInstance()
     private val endTime = Calendar.getInstance()

@@ -1,7 +1,5 @@
 package dev.synople.homehacks.homeowner.adapters
 
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AvailabilityDayAdapter(
-    private val availabilities: MutableList<Long>, // TODO: Add param for day of week
+    private val availabilities: MutableList<Long>,
     private val currDate: Calendar
 ) :
     RecyclerView.Adapter<AvailabilityDayViewHolder>() {
@@ -56,7 +54,6 @@ class AvailabilityDayViewHolder internal constructor(override val containerView:
         }
 
         containerView.setOnClickListener {
-            Log.v("AvailabilityDayAdapter", startTime.timeInMillis.toString())
             availabilities.add(startTime.timeInMillis)
             containerView.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.mintGreen))
         }
