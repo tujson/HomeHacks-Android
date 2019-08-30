@@ -43,6 +43,7 @@ class AvailabilityDayViewHolder internal constructor(override val containerView:
         val startTime = currDate.clone() as Calendar
         startTime.set(Calendar.HOUR_OF_DAY, auditStartTime)
         startTime.set(Calendar.MINUTE, 0)
+        startTime.set(Calendar.SECOND, 0)
         startTime.set(Calendar.MILLISECOND, 0)
         startTime.add(Calendar.MINUTE, position * auditTimeLength)
         containerView.findViewById<TextView>(R.id.tvDay).text = dateFormat.format(startTime.time)

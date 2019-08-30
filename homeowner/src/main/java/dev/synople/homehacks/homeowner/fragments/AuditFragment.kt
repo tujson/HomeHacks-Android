@@ -44,17 +44,9 @@ class AuditFragment : Fragment() {
         // Setting up scheduler
         tabDateFormat.timeZone = date.timeZone
 
-        vPAvailabilities.adapter =
-            AvailabilityAdapter(audit?.availabilities ?: run { mutableListOf<Long>() })
-        TabLayoutMediator(tabs, vPAvailabilities) { tab, position ->
-            val currDate = Calendar.getInstance()
-            currDate.add(Calendar.DATE, position)
-            tab.text = tabDateFormat.format(currDate.time)
-        }.attach()
-
-
         btnContinue.setOnClickListener {
             val questions = mutableListOf<Question>()
+            // TODO: REMOVE
             val question =
                 Question("Kitchen", "Is there a fire extinguisher?", "", "", mutableListOf())
             questions.add(question)
@@ -90,20 +82,35 @@ class AuditFragment : Fragment() {
                         tvStatus.text = "You have an audit pending assignment"
                         disabled.visibility = View.GONE
                         btnContinue.text = "Save Changes"
+                        setupScheduler()
                     } else {
                         val statusDateFormat = SimpleDateFormat("EEEE MMM dd h:mm a", Locale.US)
 
                         tvStatus.text =
                             "You have an audit scheduled for \n" + statusDateFormat.format(audit.scheduledTime)
+                        disabled.visibility = View.VISIBLE
                     }
-                    disabled.visibility = View.VISIBLE
                 } ?: run {
                     audit = null
                     tvStatus.text = "Schedule an audit"
                     disabled.visibility = View.GONE
+                    setupScheduler()
                 }
 
                 swipeRefresh.isRefreshing = false
             }
+    }
+
+    private fun setupScheduler() {
+        vPAvailabilities.adapter =
+            AvailabilityAdapter(audit?.availabilities
+                ?: run {
+                    mutableListOf<Long>()
+                })
+        TabLayoutMediator(tabs, vPAvailabilities) { tab, position ->
+            val currDate = Calendar.getInstance()
+            currDate.add(Calendar.DATE, position)
+            tab.text = tabDateFormat.format(currDate.time)
+        }.attach()
     }
 }

@@ -37,7 +37,7 @@ class AvailabilityViewHolder internal constructor(override val containerView: Vi
 
     fun bindAvailability(availabilities: MutableList<Long>, position: Int) {
         val currDate = Calendar.getInstance()
-        currDate.add(Calendar.DAY_OF_WEEK, position)
+        currDate.add(Calendar.WEEK_OF_MONTH, position)
 
         val rvAvailabilityDay = containerView.findViewById<RecyclerView>(R.id.rvAvailabilityDay)
         rvAvailabilityDay.adapter = AvailabilityDayAdapter(availabilities, currDate)
