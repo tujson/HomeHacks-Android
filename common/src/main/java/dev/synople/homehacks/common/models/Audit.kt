@@ -10,10 +10,9 @@ data class Audit(
     var auditorName: String = "",
     var homeownerId: String = "",
     var homeownerName: String = "",
-    var address: String = "", // Audit location
-    var startTime: Long = 0,
-    var endTime: Long = 0,
+    var address: String = "",
     var questions: MutableList<Question> = mutableListOf(),
-    var scheduledTime: Long = 0,
-    var performedTime: Long = 0
+    var availabilities: MutableList<Long> = mutableListOf(), // Epoch time. Value indicates possible audit start time. Audits are of length auditTimeLength long.
+    var scheduledTime: Long = 0, // When this audit is scheduled for
+    var performedTime: Long = 0 // When this audit is performed
 ) : Parcelable

@@ -8,26 +8,33 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.FirebaseFirestore
 import dev.synople.homehacks.common.models.Audit
 import dev.synople.homehacks.common.models.Question
 import dev.synople.homehacks.homeowner.AppContext
 
 import dev.synople.homehacks.homeowner.R
+import dev.synople.homehacks.homeowner.adapters.AvailabilityAdapter
 import kotlinx.android.synthetic.main.fragment_audit.*
-import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AuditFragment : Fragment() {
 
+    private var audit: Audit? = null
+    private var availabilityAdapter: AvailabilityAdapter? = null
     private val date = Calendar.getInstance()
     private val startTime = Calendar.getInstance()
     private val endTime = Calendar.getInstance()
 
-    private val dateFormatter = DateFormat.getDateInstance(DateFormat.LONG)
-    private val timeFormatter = DateFormat.getTimeInstance(DateFormat.LONG)
+    private val dateFormat = SimpleDateFormat("EEE MMMdd", Locale.US)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) =
         inflater.inflate(R.layout.fragment_audit, container, false)!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,60 +47,32 @@ class AuditFragment : Fragment() {
         fetchPendingAudit()
 
         // Setting up scheduler
-        dateFormatter.timeZone = date.timeZone
-        timeFormatter.timeZone = startTime.timeZone
-//
-//        btnDate.setOnClickListener {
-//            DatePickerDialog(
-//                context!!, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-//                    date.set(Calendar.YEAR, year)
-//                    date.set(Calendar.MONTH, month)
-//                    date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-//
-//                    btnDate.text = dateFormatter.format(date.time)
-//                },
-//                date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH)
-//            ).show()
-//        }
-//
-//        tvStartTime.text = "9:00 AM"
-//        tvStartTime.setOnClickListener {
-//            TimePickerDialog(
-//                context!!,
-//                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-//                    startTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
-//                    startTime.set(Calendar.MINUTE, minute)
-//
-//                    tvStartTime.text = timeFormatter.format(startTime.time)
-//                },
-//                startTime.get(Calendar.HOUR_OF_DAY),
-//                startTime.get(Calendar.MINUTE),
-//                false
-//            ).show()
-//        }
-//
-//        tvEndTime.text = "5:00 PM"
-//        tvEndTime.setOnClickListener {
-//            TimePickerDialog(
-//                context!!,
-//                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-//                    endTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
-//                    endTime.set(Calendar.MINUTE, minute)
-//
-//                    tvEndTime.text = timeFormatter.format(endTime.time)
-//                },
-//                endTime.get(Calendar.HOUR_OF_DAY),
-//                endTime.get(Calendar.MINUTE),
-//                false
-//            ).show()
-//        }
+        dateFormat.timeZone = date.timeZone
+
+        vPAvailabilities.adapter =
+            AvailabilityAdapter(audit?.availabilities ?: run { mutableListOf<Long>() })
+        TabLayoutMediator(tabs, vPAvailabilities) { tab, position ->
+            val currDate = Calendar.getInstance()
+            currDate.add(Calendar.DATE, position)
+            tab.text = dateFormat.format(currDate.time)
+        }.attach()
+
 
         btnContinue.setOnClickListener {
-            startTime.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH))
-            endTime.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH))
+            startTime.set(
+                date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH),
+                date.get(Calendar.DAY_OF_MONTH)
+            )
+            endTime.set(
+                date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH),
+                date.get(Calendar.DAY_OF_MONTH)
+            )
 
             val questions = mutableListOf<Question>()
-            val question = Question("Kitchen", "Is there a fire extinguisher?", "", "", mutableListOf())
+            val question =
+                Question("Kitchen", "Is there a fire extinguisher?", "", "", mutableListOf())
             questions.add(question)
 
             val audit = Audit(
@@ -103,9 +82,8 @@ class AuditFragment : Fragment() {
                 AppContext.user.id,
                 AppContext.user.name,
                 AppContext.user.address,
-                startTime.timeInMillis,
-                endTime.timeInMillis,
                 questions,
+                mutableListOf(),
                 0, 0
             )
 
@@ -114,7 +92,7 @@ class AuditFragment : Fragment() {
                 .document(AppContext.user.id)
                 .set(audit)
                 .addOnSuccessListener {
-                    tvStatus.text = "You have an audit pending for \n" + dateFormatter.format(startTime.time)
+                    tvStatus.text = "You have an audit pending assignment"
                     disabled.visibility = View.VISIBLE
                 }
         }
@@ -124,18 +102,17 @@ class AuditFragment : Fragment() {
         FirebaseFirestore.getInstance().collection("pendingAudits").document(AppContext.user.id)
             .get().addOnSuccessListener {
                 it.toObject(Audit::class.java)?.let { audit ->
-                    if (audit.auditorId.isEmpty()) {
-                        startTime.timeInMillis = audit.startTime
-                        endTime.timeInMillis = audit.endTime
+                    this.audit = audit
 
-                        tvStatus.text = "You have an audit pending for \n" + dateFormatter.format(startTime.time)
+                    if (audit.auditorId.isEmpty()) {
+                        tvStatus.text = "You have an audit pending assignment"
                     } else {
-                        val scheduledTime = Calendar.getInstance()
-                        scheduledTime.timeInMillis = audit.scheduledTime
-                        tvStatus.text = "You have an audit scheduled for \n" + dateFormatter.format(scheduledTime.time)
+//                        tvStatus.text =
+//                            "You have an audit scheduled for \n" + dateFormatter.format(audit.scheduledTime)
                     }
                     disabled.visibility = View.VISIBLE
                 } ?: run {
+                    audit = null
                     tvStatus.text = "Schedule an audit"
                     disabled.visibility = View.GONE
                 }

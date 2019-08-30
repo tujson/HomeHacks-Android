@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:weightSum="3"
     tools:context=".fragments.AuditFragment">
@@ -33,33 +34,27 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAvailabilities"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content"
+            app:tabMode="scrollable" />
 
-        <Button
-            android:id="@+id/tvAddAvailability"
-            style="@style/button.blue"
-            android:layout_below="@+id/rvAvailabilities"
-            android:layout_width="wrap_content"
-            android:text="Add availability"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vPAvailabilities"
+            android:layout_width="match_parent"
+            android:layout_above="@+id/btnContinue"
+            android:layout_below="@+id/tabs"
+            android:layout_height="match_parent"/>
 
         <Button
             android:id="@+id/btnContinue"
             style="@style/button.green"
-            android:layout_width="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
             android:textAllCaps="false"
             android:text="Continue"
-            android:layout_marginEnd="16dp"
-            android:layout_below="@+id/tvAddAvailability"
-            android:layout_marginTop="8dp"
             android:layout_height="wrap_content" />
 
         <View
