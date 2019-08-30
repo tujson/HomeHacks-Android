@@ -28,6 +28,8 @@ class AvailabilityAdapter(
     }
 
     override fun getItemCount() = auditLookahead
+
+    fun getAllItems() = availabilities
 }
 
 class AvailabilityViewHolder internal constructor(override val containerView: View) :

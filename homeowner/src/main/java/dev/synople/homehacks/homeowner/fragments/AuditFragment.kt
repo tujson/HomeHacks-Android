@@ -22,10 +22,8 @@ class AuditFragment : Fragment() {
 
     private var audit: Audit? = null
     private val date = Calendar.getInstance()
-    private val startTime = Calendar.getInstance()
-    private val endTime = Calendar.getInstance()
 
-    private val dateFormat = SimpleDateFormat("EEE MMMdd", Locale.US)
+    private val tabDateFormat = SimpleDateFormat("EEE MMMdd", Locale.US)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,29 +42,18 @@ class AuditFragment : Fragment() {
         fetchPendingAudit()
 
         // Setting up scheduler
-        dateFormat.timeZone = date.timeZone
+        tabDateFormat.timeZone = date.timeZone
 
         vPAvailabilities.adapter =
             AvailabilityAdapter(audit?.availabilities ?: run { mutableListOf<Long>() })
         TabLayoutMediator(tabs, vPAvailabilities) { tab, position ->
             val currDate = Calendar.getInstance()
             currDate.add(Calendar.DATE, position)
-            tab.text = dateFormat.format(currDate.time)
+            tab.text = tabDateFormat.format(currDate.time)
         }.attach()
 
 
         btnContinue.setOnClickListener {
-            startTime.set(
-                date.get(Calendar.YEAR),
-                date.get(Calendar.MONTH),
-                date.get(Calendar.DAY_OF_MONTH)
-            )
-            endTime.set(
-                date.get(Calendar.YEAR),
-                date.get(Calendar.MONTH),
-                date.get(Calendar.DAY_OF_MONTH)
-            )
-
             val questions = mutableListOf<Question>()
             val question =
                 Question("Kitchen", "Is there a fire extinguisher?", "", "", mutableListOf())
@@ -80,8 +67,7 @@ class AuditFragment : Fragment() {
                 AppContext.user.name,
                 AppContext.user.address,
                 questions,
-                mutableListOf(),
-                0, 0
+                (vPAvailabilities.adapter as AvailabilityAdapter).getAllItems()
             )
 
             FirebaseFirestore.getInstance()
@@ -90,7 +76,6 @@ class AuditFragment : Fragment() {
                 .set(audit)
                 .addOnSuccessListener {
                     tvStatus.text = "You have an audit pending assignment"
-                    disabled.visibility = View.VISIBLE
                 }
         }
     }
@@ -103,9 +88,13 @@ class AuditFragment : Fragment() {
 
                     if (audit.auditorId.isEmpty()) {
                         tvStatus.text = "You have an audit pending assignment"
+                        disabled.visibility = View.GONE
+                        btnContinue.text = "Save Changes"
                     } else {
-//                        tvStatus.text =
-//                            "You have an audit scheduled for \n" + dateFormatter.format(audit.scheduledTime)
+                        val statusDateFormat = SimpleDateFormat("EEEE MMM dd h:mm a", Locale.US)
+
+                        tvStatus.text =
+                            "You have an audit scheduled for \n" + statusDateFormat.format(audit.scheduledTime)
                     }
                     disabled.visibility = View.VISIBLE
                 } ?: run {

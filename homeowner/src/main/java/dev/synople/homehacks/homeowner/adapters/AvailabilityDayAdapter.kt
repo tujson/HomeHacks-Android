@@ -54,8 +54,13 @@ class AvailabilityDayViewHolder internal constructor(override val containerView:
         }
 
         containerView.setOnClickListener {
-            availabilities.add(startTime.timeInMillis)
-            containerView.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.mintGreen))
+            if (availabilities.contains(startTime.timeInMillis)) {
+                availabilities.remove(startTime.timeInMillis)
+                containerView.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.white))
+            } else {
+                availabilities.add(startTime.timeInMillis)
+                containerView.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.mintGreen))
+            }
         }
     }
 }
