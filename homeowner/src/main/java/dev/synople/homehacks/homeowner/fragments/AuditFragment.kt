@@ -2,16 +2,15 @@ package dev.synople.homehacks.homeowner.fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.FirebaseFirestore
 import dev.synople.homehacks.common.models.Audit
 import dev.synople.homehacks.common.models.Question
 import dev.synople.homehacks.homeowner.AppContext
-
 import dev.synople.homehacks.homeowner.R
 import dev.synople.homehacks.homeowner.adapters.AvailabilityAdapter
 import kotlinx.android.synthetic.main.fragment_audit.*
@@ -73,8 +72,11 @@ class AuditFragment : Fragment() {
     }
 
     private fun fetchPendingAudit() {
-        FirebaseFirestore.getInstance().collection("pendingAudits").document(AppContext.user.id)
-            .get().addOnSuccessListener {
+        FirebaseFirestore.getInstance()
+            .collection("pendingAudits")
+            .document(AppContext.user.id)
+            .get()
+            .addOnSuccessListener {
                 it.toObject(Audit::class.java)?.let { audit ->
                     this.audit = audit
 
