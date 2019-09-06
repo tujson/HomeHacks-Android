@@ -61,7 +61,7 @@ class LoginFragment : Fragment() {
             }
         }.addOnFailureListener {
             Log.e(TAG, "Retrieve Auditor from database", it)
-            Toast.makeText(context, "Error retrieving Homeowner", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Error retrieving Auditor", Toast.LENGTH_SHORT).show()
         }
     }
 
