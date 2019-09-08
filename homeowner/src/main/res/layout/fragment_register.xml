@@ -8,23 +8,10 @@
     tools:context=".fragments.RegisterFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etName"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:hint="Name" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="120dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAddress"

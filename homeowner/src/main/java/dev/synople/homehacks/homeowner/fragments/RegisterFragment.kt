@@ -31,10 +31,13 @@ class RegisterFragment : Fragment() {
         (activity as MainActivity).bottomNavigationView.visibility = View.GONE
 
         btnRegister.setOnClickListener {
-            val name = etName.text.toString()
             val address = etAddress.text.toString()
 
-            AppContext.user = Homeowner(FirebaseAuth.getInstance().currentUser!!.uid, name, address)
+            AppContext.user = Homeowner(
+                FirebaseAuth.getInstance().currentUser!!.uid,
+                FirebaseAuth.getInstance().currentUser!!.displayName.toString(),
+                address
+            )
 
             FirebaseFirestore.getInstance().collection("homeowners")
                 .document(AppContext.user.id)

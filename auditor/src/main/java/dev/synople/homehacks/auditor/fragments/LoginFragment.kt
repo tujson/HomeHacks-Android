@@ -35,7 +35,7 @@ class LoginFragment : Fragment() {
             retrieveAuditor(it.uid)
         } ?: run {
             val providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.EmailBuilder().setAllowNewAccounts(false).build(),
                 AuthUI.IdpConfig.GoogleBuilder().build()
             )
 
