@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.storage.FirebaseStorage
 
 import dev.synople.homehacks.auditor.R
@@ -31,6 +31,7 @@ class SurveyFragment : Fragment(), CoroutineScope {
 
     private val args: SurveyFragmentArgs by navArgs()
     private lateinit var audit: Audit
+    private lateinit var questions: MutableList<Question>
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO
@@ -48,6 +49,22 @@ class SurveyFragment : Fragment(), CoroutineScope {
         audit = args.audit
 
         loadQuestions()
+
+        ivLeft.setOnClickListener {
+            vpQuestions.currentItem = vpQuestions.currentItem - 1
+        }
+        ivRight.setOnClickListener {
+            vpQuestions.currentItem = vpQuestions.currentItem + 1
+        }
+
+        vpQuestions.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+
+                tvProgress.text = "${position + 1}/${questions.size}"
+                progressBar.progress = position
+            }
+        })
     }
 
     private fun loadQuestions() {
@@ -61,10 +78,11 @@ class SurveyFragment : Fragment(), CoroutineScope {
             val listType = object : TypeToken<ArrayList<Question>>() {
 
             }.type
-            val questions = Gson().fromJson(text, listType) as MutableList<Question>
+            questions = Gson().fromJson(text, listType) as MutableList<Question>
 
             withContext(Dispatchers.Main) {
                 vpQuestions.adapter = QuestionAdapter(questions)
+                progressBar.max = questions.size
             }
         }
     }
