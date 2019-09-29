@@ -62,7 +62,7 @@ class SurveyFragment : Fragment(), CoroutineScope {
                 super.onPageSelected(position)
 
                 tvProgress.text = "${position + 1}/${questions.size}"
-                progressBar.progress = position
+                progressBar.progress = position + 1
             }
         })
     }
