@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.FirebaseFirestore
 import dev.synople.homehacks.common.models.Audit
-import dev.synople.homehacks.common.models.Question
 import dev.synople.homehacks.homeowner.AppContext
 import dev.synople.homehacks.homeowner.R
 import dev.synople.homehacks.homeowner.adapters.AvailabilityAdapter
@@ -44,12 +43,6 @@ class AuditFragment : Fragment() {
         tabDateFormat.timeZone = date.timeZone
 
         btnContinue.setOnClickListener {
-            val questions = mutableListOf<Question>()
-            // TODO: REMOVE
-            val question =
-                Question("Kitchen", "Is there a fire extinguisher?", "", "", mutableListOf())
-            questions.add(question)
-
             val audit = Audit(
                 UUID.randomUUID().toString(),
                 "",
@@ -57,8 +50,8 @@ class AuditFragment : Fragment() {
                 AppContext.user.id,
                 AppContext.user.name,
                 AppContext.user.address,
-                questions,
-                (vPAvailabilities.adapter as AvailabilityAdapter).getAllItems()
+                "v1",
+                (vpAvailabilities.adapter as AvailabilityAdapter).getAllItems()
             )
 
             FirebaseFirestore.getInstance()
@@ -104,12 +97,12 @@ class AuditFragment : Fragment() {
     }
 
     private fun setupScheduler() {
-        vPAvailabilities.adapter =
+        vpAvailabilities.adapter =
             AvailabilityAdapter(audit?.availabilities
                 ?: run {
                     mutableListOf<Long>()
                 })
-        TabLayoutMediator(tabs, vPAvailabilities) { tab, position ->
+        TabLayoutMediator(tabs, vpAvailabilities) { tab, position ->
             val currDate = Calendar.getInstance()
             currDate.add(Calendar.DATE, position)
             tab.text = tabDateFormat.format(currDate.time)

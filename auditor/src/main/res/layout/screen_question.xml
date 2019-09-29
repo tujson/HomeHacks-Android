@@ -3,7 +3,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvArea"
+        android:id="@+id/tvLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -16,7 +16,7 @@
         android:id="@+id/tvQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvArea"
+        android:layout_below="@+id/tvLocation"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
         android:textColor="@color/black"
@@ -24,21 +24,23 @@
 
     <Button
         android:id="@+id/btnYes"
-        android:layout_width="80dp"
+        style="@style/button.green"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvQuestion"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:text="Yes"
         android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btnNo"
-        android:layout_width="80dp"
+        style="@style/button.red"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnYes"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
         android:text="No"
         android:textAllCaps="false" />
 
@@ -47,9 +49,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnNo"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="18dp"
-        android:layout_marginEnd="12dp">
+        android:layout_marginEnd="36dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etComments"
@@ -63,6 +65,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tilComments"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
         android:text="Images" />
+
 </RelativeLayout>

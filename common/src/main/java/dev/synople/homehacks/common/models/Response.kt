@@ -4,8 +4,9 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Question(
+data class Response(
     var id: Int = 0,
-    var question: String = "",
-    var location: String = "" // Area of the home (e.g. Kitchen, Bathroom 1, etc.)
+    var response: String = "",
+    var comments: String = "",
+    var images: MutableList<String> = mutableListOf()
 ) : Parcelable

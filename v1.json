@@ -1,0 +1,27 @@
+[
+   {
+      "id":1,
+      "question":"Are the filters clean?",
+      "location":""
+   },
+   {
+      "id":2,
+      "question":"Is there a programmable thermostat?",
+      "location":""
+   },
+   {
+      "id":3,
+      "question":"Are CFL bulbs in use?",
+      "location":"living room"
+   },
+   {
+      "id":4,
+      "question":"Are windows properly sealed?",
+      "location":"bedroom"
+   },
+   {
+      "id":5,
+      "question":"Are appliances Energy Star rated?",
+      "location":"kitchen"
+   }
+]

@@ -11,7 +11,8 @@ data class Audit(
     var homeownerId: String = "",
     var homeownerName: String = "",
     var address: String = "",
-    var questions: MutableList<Question> = mutableListOf(),
+    var surveyVersion: String = "",
+    var responses: MutableList<Response> = mutableListOf(),
     var availabilities: MutableList<Long> = mutableListOf(), // Epoch time. Value indicates possible audit start time. Audits are of length auditTimeLength long.
     var scheduledTime: Long = 0, // When this audit is scheduled for
     var performedTime: Long = 0 // When this audit is performed

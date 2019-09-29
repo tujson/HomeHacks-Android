@@ -13,15 +13,13 @@ class QuestionAdapter(private val questions: MutableList<Question>) :
     RecyclerView.Adapter<QuestionAdapter.ViewHolder>() {
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bindQuestion(question: Question) {
-            containerView.tvArea.text = question.area
+            containerView.tvLocation.text = question.location
             containerView.tvQuestion.text = question.question
 
             containerView.btnYes.setOnClickListener {
-                question.answer = "true"
             }
 
             containerView.btnNo.setOnClickListener {
-                question.answer = "false"
             }
         }
     }

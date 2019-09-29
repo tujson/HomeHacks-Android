@@ -43,50 +43,50 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
         tvHomeownerName.text = audit.homeownerName
         tvAddress.text = audit.address
 
-        if (audit.questions[0].answer.isNotEmpty()) {
-            btnStartAudit.text = "Upload Audit"
-            btnStartAudit.background = ContextCompat.getDrawable(context!!, R.drawable.button_green)
-        }
+//        if (audit.responses[0].response.isNotEmpty()) {
+//            btnStartAudit.text = "Upload Audit"
+//            btnStartAudit.background = ContextCompat.getDrawable(context!!, R.drawable.button_green)
+//        }
 
         btnStartAudit.setOnClickListener {
-            if (audit.questions[0].answer.isNotEmpty()) {
-                AppContext.user.scheduledAudits.clear()
-
-                launch {
-                    withContext(Dispatchers.IO) {
-                        FirebaseFirestore.getInstance()
-                            .collection("auditors")
-                            .document(AppContext.user.id)
-                            .set(AppContext.user)
-                    }
-
-                    withContext(Dispatchers.IO) {
-                        FirebaseFirestore.getInstance()
-                            .collection("pendingAudits")
-                            .document(audit.homeownerId)
-                            .delete()
-                    }
-
-                    withContext(Dispatchers.IO) {
-                        FirebaseFirestore.getInstance()
-                            .collection("audits")
-                            .document(audit.homeownerId)
-                            .collection("audits")
-                            .document(audit.id)
-                            .set(audit)
-                    }
-
-                    Navigation.findNavController(view)
-                        .navigate(R.id.action_viewAuditFragment_to_calendarFragment)
-                }
-            } else {
+//            if (audit.responses[0].response.isNotEmpty()) {
+//                AppContext.user.scheduledAudits.clear()
+//
+//                launch {
+//                    withContext(Dispatchers.IO) {
+//                        FirebaseFirestore.getInstance()
+//                            .collection("auditors")
+//                            .document(AppContext.user.id)
+//                            .set(AppContext.user)
+//                    }
+//
+//                    withContext(Dispatchers.IO) {
+//                        FirebaseFirestore.getInstance()
+//                            .collection("pendingAudits")
+//                            .document(audit.homeownerId)
+//                            .delete()
+//                    }
+//
+//                    withContext(Dispatchers.IO) {
+//                        FirebaseFirestore.getInstance()
+//                            .collection("audits")
+//                            .document(audit.homeownerId)
+//                            .collection("audits")
+//                            .document(audit.id)
+//                            .set(audit)
+//                    }
+//
+//                    Navigation.findNavController(view)
+//                        .navigate(R.id.action_viewAuditFragment_to_calendarFragment)
+//                }
+//            } else {
                 Navigation.findNavController(view)
                     .navigate(
                         ViewAuditFragmentDirections.actionViewAuditFragmentToSurveyFragment(
                             audit
                         )
                     )
-            }
+//            }
         }
     }
 }

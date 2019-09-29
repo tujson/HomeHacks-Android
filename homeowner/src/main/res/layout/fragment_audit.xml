@@ -42,7 +42,7 @@
             app:tabMode="scrollable" />
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vPAvailabilities"
+            android:id="@+id/vpAvailabilities"
             android:layout_width="match_parent"
             android:layout_above="@+id/btnContinue"
             android:layout_below="@+id/tabs"
