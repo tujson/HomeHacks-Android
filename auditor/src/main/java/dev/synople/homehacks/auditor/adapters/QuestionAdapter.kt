@@ -44,11 +44,15 @@ class QuestionAdapter(
 
             containerView.btnYes.setOnClickListener {
                 containerView.btnYes.tag = "true"
+                response?.response = "yes"
+                response?.comments = containerView.etComments.text.toString()
                 onNext()
             }
 
             containerView.btnNo.setOnClickListener {
                 containerView.btnYes.tag = "false"
+                response?.response = "no"
+                response?.comments = containerView.etComments.text.toString()
                 onNext()
             }
 
@@ -75,8 +79,6 @@ class QuestionAdapter(
             }
         }
     }
-
-    public fun getAllResponses() = responses
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(

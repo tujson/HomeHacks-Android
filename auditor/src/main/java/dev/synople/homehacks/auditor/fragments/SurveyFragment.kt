@@ -49,8 +49,7 @@ import kotlin.collections.ArrayList
 class SurveyFragment : Fragment(), CoroutineScope {
 
     private val REQUEST_IMAGE_CAPTURE = 1
-    private var currentPhotoPath: String = ""
-    private var questionPosition = 0
+    private var currentPhotoUri: Uri = Uri.EMPTY
 
     private val args: SurveyFragmentArgs by navArgs()
     private lateinit var audit: Audit
@@ -148,12 +147,12 @@ class SurveyFragment : Fragment(), CoroutineScope {
                         }
 
                         photoFile?.also {
-                            val photoURI: Uri = FileProvider.getUriForFile(
+                            currentPhotoUri = FileProvider.getUriForFile(
                                 context!!,
                                 "dev.synople.homehacks.auditor.fileprovider",
                                 it
                             )
-//                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
                             startActivityForResult(
                                 takePictureIntent,
                                 REQUEST_IMAGE_CAPTURE
@@ -174,25 +173,14 @@ class SurveyFragment : Fragment(), CoroutineScope {
             ".jpg", /* suffix */
             storageDir /* directory */
         ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
+            responses[vpQuestions.currentItem].images.add(currentPhotoUri)
 
-            val response = responses[vpQuestions.currentItem]
-            response.images.add(imageBitmap)
-            responses[vpQuestions.currentItem] = response
-
-//            vpQuestions.adapter?.notifyItemChanged(vpQuestions.currentItem)
-            vpQuestions.adapter?.notifyDataSetChanged()
-            Log.v("SurveyFragment", questions[vpQuestions.currentItem].toString())
-            Log.v("SurveyFragment", responses[vpQuestions.currentItem].toString())
-
-            Log.v("SurveyFragment", (vpQuestions.adapter as QuestionAdapter).getAllResponses().toString())
+            vpQuestions.adapter?.notifyItemChanged(vpQuestions.currentItem)
         }
     }
 }

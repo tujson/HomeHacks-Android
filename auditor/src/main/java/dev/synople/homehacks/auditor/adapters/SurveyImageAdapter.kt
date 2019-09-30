@@ -1,7 +1,10 @@
 package dev.synople.homehacks.auditor.adapters
 
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +14,21 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.card_image.view.*
 
 class SurveyImageAdapter(
-    private val images: MutableList<Bitmap>,
-
+    private val images: MutableList<Uri>,
     private val onClick: () -> Unit
 ) : RecyclerView.Adapter<SurveyImageAdapter.ViewHolder>() {
 
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer {
-        fun bindImage(bitmap: Bitmap, onClick: () -> Unit) {
+        fun bindImage(photoFilePath: Uri, onClick: () -> Unit) {
 
-            containerView.ivImage.setImageDrawable(BitmapDrawable(containerView.context.resources, bitmap))
+            // Deprecated, but alternative has minSdkVersion 28
+            containerView.ivImage.setImageBitmap(
+                MediaStore.Images.Media.getBitmap(
+                    containerView.context.contentResolver,
+                    photoFilePath
+                )
+            )
 
             containerView.setOnClickListener { onClick() }
         }
