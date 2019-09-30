@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -61,12 +62,13 @@ class QuestionAdapter(
 
             response?.let {
                 if (it.images.isNotEmpty()) {
-                    containerView.ivImage.setImageDrawable(
-                        BitmapDrawable(
-                            containerView.context.resources,
-                            it.images[0]
-                        )
+                    containerView.rvImages.layoutManager = LinearLayoutManager(
+                        containerView.context,
+                        LinearLayoutManager.HORIZONTAL,
+                        false
                     )
+
+                    containerView.rvImages.adapter = SurveyImageAdapter(it.images) {}
                 }
             }
         }

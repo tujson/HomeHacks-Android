@@ -60,14 +60,12 @@
             android:hint="Comments" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImages"
+        android:layout_width="match_parent"
         android:layout_below="@+id/tilComments"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="36dp"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="24dp"
         android:layout_height="wrap_content" />
 
     <Button
@@ -78,7 +76,7 @@
         android:text="Add Image"
         android:paddingStart="6dp"
         android:paddingEnd="6dp"
-        android:layout_below="@+id/ivImage"
+        android:layout_below="@+id/rvImages"
         android:layout_marginTop="8dp"
         android:layout_marginStart="36dp"/>
 
