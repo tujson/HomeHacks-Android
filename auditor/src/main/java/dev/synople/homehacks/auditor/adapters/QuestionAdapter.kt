@@ -69,6 +69,8 @@ class QuestionAdapter(
                     )
 
                     containerView.rvImages.adapter = SurveyImageAdapter(it.images) {}
+                    containerView.rvImages.setHasFixedSize(true)
+                    containerView.rvImages.isNestedScrollingEnabled = false
                 }
             }
         }
