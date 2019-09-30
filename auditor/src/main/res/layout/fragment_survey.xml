@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SurveyFragment">
 
-    <ImageView
-        android:id="@+id/ivLeft"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnFinish"
+        style="@style/button.green"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlHeader"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_chevron_left" />
+        android:layout_marginEnd="12dp"
+        android:text="Finish Survey" />
 
     <ImageView
         android:id="@+id/ivRight"
@@ -23,6 +24,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
         android:src="@drawable/ic_chevron_right" />
+
+    <ImageView
+        android:id="@+id/ivLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlHeader"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_chevron_left" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -68,5 +78,6 @@
         android:id="@+id/vpQuestions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/btnFinish"
         android:layout_below="@id/progressBar" />
 </RelativeLayout>

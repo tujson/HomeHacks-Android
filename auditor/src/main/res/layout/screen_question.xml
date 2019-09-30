@@ -60,13 +60,26 @@
             android:hint="Comments" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tvLblImages"
+    <ImageView
+        android:id="@+id/ivImage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tilComments"
+        android:layout_below="@+id/tilComments"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="24dp"
-        android:text="Images" />
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="36dp"
+        android:scaleType="centerCrop"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnAddImage"
+        style="@style/button.blue"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:text="Add Image"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="36dp"/>
 
 </RelativeLayout>

@@ -51,6 +51,7 @@ class AuditFragment : Fragment() {
                 AppContext.user.name,
                 AppContext.user.address,
                 "v1",
+                mutableListOf(),
                 (vpAvailabilities.adapter as AvailabilityAdapter).getAllItems()
             )
 
