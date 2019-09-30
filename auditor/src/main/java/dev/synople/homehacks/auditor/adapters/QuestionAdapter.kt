@@ -1,27 +1,16 @@
 package dev.synople.homehacks.auditor.adapters
 
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.synople.homehacks.auditor.R
-import dev.synople.homehacks.auditor.fragments.SurveyFragment
 import dev.synople.homehacks.common.models.Question
 import dev.synople.homehacks.common.models.Response
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.screen_question.view.*
-import org.w3c.dom.Comment
 
 class QuestionAdapter(
     private val questions: List<Question>,
@@ -35,7 +24,7 @@ class QuestionAdapter(
         LayoutContainer {
         fun bindQuestion(
             question: Question,
-            response: Response?,
+            response: Response,
             onNext: () -> Unit,
             takePicture: () -> Unit
         ) {
@@ -44,17 +33,19 @@ class QuestionAdapter(
 
             containerView.btnYes.setOnClickListener {
                 containerView.btnYes.tag = "true"
-                response?.response = "yes"
-                response?.comments = containerView.etComments.text.toString()
+                response.response = "yes"
+                response.comments = containerView.etComments.text.toString()
                 onNext()
             }
 
             containerView.btnNo.setOnClickListener {
                 containerView.btnYes.tag = "false"
-                response?.response = "no"
-                response?.comments = containerView.etComments.text.toString()
+                response.response = "no"
+                response.comments = containerView.etComments.text.toString()
                 onNext()
             }
+
+            containerView.etComments.setText(response.comments)
 
             containerView.tag = question.id
 
@@ -62,20 +53,17 @@ class QuestionAdapter(
                 takePicture()
             }
 
-            Log.v("QuestionAdapter", "Response: ${response.toString()}")
+            response.id = question.id
+            if (response.imageUris.isNotEmpty()) {
+                containerView.rvImages.layoutManager = LinearLayoutManager(
+                    containerView.context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
 
-            response?.let {
-                if (it.images.isNotEmpty()) {
-                    containerView.rvImages.layoutManager = LinearLayoutManager(
-                        containerView.context,
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-
-                    containerView.rvImages.adapter = SurveyImageAdapter(it.images) {}
-                    containerView.rvImages.setHasFixedSize(true)
-                    containerView.rvImages.isNestedScrollingEnabled = false
-                }
+                containerView.rvImages.adapter = SurveyImageAdapter(response.imageUris) {}
+                containerView.rvImages.setHasFixedSize(true)
+                containerView.rvImages.isNestedScrollingEnabled = false
             }
         }
     }

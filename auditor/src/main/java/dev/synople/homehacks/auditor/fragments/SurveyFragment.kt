@@ -6,7 +6,6 @@ import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -14,14 +13,12 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 import dev.synople.homehacks.auditor.R
@@ -38,10 +35,8 @@ import com.google.gson.reflect.TypeToken
 import dev.synople.homehacks.auditor.adapters.QuestionAdapter
 import dev.synople.homehacks.common.models.Question
 import dev.synople.homehacks.common.models.Response
-import kotlinx.android.synthetic.main.screen_question.view.*
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -50,6 +45,7 @@ class SurveyFragment : Fragment(), CoroutineScope {
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private var currentPhotoUri: Uri = Uri.EMPTY
+    private var currentPhotoFileName: String = ""
 
     private val args: SurveyFragmentArgs by navArgs()
     private lateinit var audit: Audit
@@ -91,7 +87,7 @@ class SurveyFragment : Fragment(), CoroutineScope {
         })
 
         btnFinish.setOnClickListener {
-            // TODO
+            audit.responses = responses
 
             Navigation.findNavController(view)
                 .navigate(SurveyFragmentDirections.actionSurveyFragmentToViewAuditFragment(audit))
@@ -167,19 +163,19 @@ class SurveyFragment : Fragment(), CoroutineScope {
     private fun createImageFile(): File {
         // Create an image file name
         val fileName = UUID.randomUUID().toString()
+        currentPhotoFileName = "$fileName.jpg"
         val storageDir: File = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         return File.createTempFile(
             fileName, /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
-        ).apply {
-        }
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            responses[vpQuestions.currentItem].images.add(currentPhotoUri)
-
+            responses[vpQuestions.currentItem].imageUris.add(currentPhotoUri)
+            responses[vpQuestions.currentItem].images.add(currentPhotoFileName)
             vpQuestions.adapter?.notifyItemChanged(vpQuestions.currentItem)
         }
     }

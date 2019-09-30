@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dev.synople.homehacks.auditor.AppContext
 import dev.synople.homehacks.auditor.R
 import dev.synople.homehacks.common.models.Audit
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_view_audit.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
@@ -43,13 +45,13 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
         tvHomeownerName.text = audit.homeownerName
         tvAddress.text = audit.address
 
-        if (audit.responses.isNotEmpty()) {
+        if (audit.responses.isNotEmpty() && audit.responses[0].response.isNotEmpty()) {
             btnStartAudit.text = "Upload Audit"
             btnStartAudit.background = ContextCompat.getDrawable(context!!, R.drawable.button_green)
         }
 
         btnStartAudit.setOnClickListener {
-            if (audit.responses.isNotEmpty()) {
+            if (audit.responses.isNotEmpty() && audit.responses[0].response.isNotEmpty()) {
                 AppContext.user.scheduledAudits.clear()
 
                 launch {
@@ -74,6 +76,17 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
                             .collection("audits")
                             .document(audit.id)
                             .set(audit)
+                    }
+
+                    withContext(Dispatchers.IO) {
+                        audit.responses.forEach { response ->
+
+                            for (i in 0 until response.images.size) {
+                                FirebaseStorage.getInstance()
+                                    .getReference("${audit.id}/${response.id}/${response.images[i]}")
+                                    .putFile(response.imageUris[i])
+                            }
+                        }
                     }
 
                     Navigation.findNavController(view)
