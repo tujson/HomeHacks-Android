@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
                 AuthUI.getInstance()
                     .createSignInIntentBuilder()
                     .setLogo(R.drawable.wordlogo)
-                    .setTheme(R.style.FirebaseTheme)
+                    .setTheme(R.style.LoginTheme)
                     .setAvailableProviders(providers)
                     .build(),
                 RC_SIGN_IN
