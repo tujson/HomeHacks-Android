@@ -7,5 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class Homeowner(
     var id: String = "",
     var name: String = "",
-    var address: String = ""
+    var address: String = "",
+    var pendingAudit: String = "",
+    var audits: MutableList<String> = mutableListOf()
 ) : Parcelable
