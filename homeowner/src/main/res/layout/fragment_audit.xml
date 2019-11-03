@@ -23,7 +23,6 @@
             android:paddingStart="18dp"
             android:paddingTop="36dp"
             android:paddingEnd="18dp"
-            android:text="You have no\naudits scheduled."
             android:textColor="@color/white"
             android:textSize="36sp" />
 
