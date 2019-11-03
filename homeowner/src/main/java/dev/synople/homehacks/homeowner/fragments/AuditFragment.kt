@@ -1,7 +1,9 @@
 package dev.synople.homehacks.homeowner.fragments
 
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,9 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
+import dev.synople.homehacks.common.auditTimeLength
 import dev.synople.homehacks.common.models.Audit
 import dev.synople.homehacks.homeowner.AppContext
 import dev.synople.homehacks.homeowner.R
@@ -43,6 +48,33 @@ class AuditFragment : Fragment() {
         // Setting up scheduler
         tabDateFormat.timeZone = date.timeZone
 
+        btnCalendar.setOnClickListener {
+            audit?.let { audit ->
+                val intent = Intent(Intent.ACTION_INSERT)
+                    .setData(CalendarContract.Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, audit.scheduledTime)
+                    .putExtra(
+                        CalendarContract.EXTRA_EVENT_END_TIME,
+                        audit.scheduledTime + (auditTimeLength * 60000)
+                    )
+                    .putExtra(
+                        CalendarContract.Events.TITLE,
+                        "[HomeHacks] Audit from ${audit.auditorName}"
+                    )
+                    .putExtra(
+                        CalendarContract.Events.DESCRIPTION,
+                        "Audit from ${audit.auditorName}.\nFrom HomeHacks app."
+                    )
+                    .putExtra(CalendarContract.Events.EVENT_LOCATION, audit.address)
+                    .putExtra(
+                        CalendarContract.Events.AVAILABILITY,
+                        CalendarContract.Events.AVAILABILITY_BUSY
+                    )
+
+                startActivity(intent)
+            }
+        }
+
         btnContinue.setOnClickListener {
             val audit = Audit(
                 UUID.randomUUID().toString(),
@@ -71,30 +103,43 @@ class AuditFragment : Fragment() {
             .collection("pendingAudits")
             .document(AppContext.user.id)
             .get()
-            .addOnSuccessListener {
-                it.toObject(Audit::class.java)?.let { audit ->
+            .addOnSuccessListener { documentSnapshot ->
+                documentSnapshot.toObject(Audit::class.java)?.let { audit ->
                     this.audit = audit
 
                     if (audit.auditorId.isEmpty()) {
                         tvStatus.text = "You have an audit pending assignment"
-                        disabled.visibility = View.GONE
                         btnContinue.text = "Save Changes"
                         setupScheduler()
                     } else {
                         val statusDateFormat = SimpleDateFormat("EEEE MMM dd h:mm a", Locale.US)
 
                         tvStatus.text =
-                            "You have an audit scheduled for: \n" + statusDateFormat.format(audit.scheduledTime)
-                    }
+                            "You have an audit scheduled for:\n" + statusDateFormat.format(audit.scheduledTime)
 
-                    swipeRefresh.layoutParams =
-                        LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            0,
-                            4.0f
-                        )
-                    clContent.visibility = View.GONE
-                    disabled.visibility = View.VISIBLE
+                        swipeRefresh.layoutParams =
+                            LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                0,
+                                4.0f
+                            )
+                        clContent.visibility = View.GONE
+
+                        btnCalendar.visibility = View.VISIBLE
+                        tvAuditorName.text = audit.auditorName
+                        tvAuditorName.visibility = View.VISIBLE
+                        ivAuditor.visibility = View.VISIBLE
+
+                        FirebaseStorage.getInstance()
+                            .getReference("profilePictures")
+                            .child(audit.auditorId)
+                            .downloadUrl
+                            .addOnSuccessListener {
+                                Picasso.get()
+                                    .load(it)
+                                    .into(ivAuditor)
+                            }
+                    }
                 } ?: run {
                     audit = null
                     tvStatus.text = "Schedule an audit"
@@ -105,7 +150,9 @@ class AuditFragment : Fragment() {
                             1.0f
                         )
                     clContent.visibility = View.VISIBLE
-                    disabled.visibility = View.GONE
+                    tvAuditorName.visibility = View.GONE
+                    btnCalendar.visibility = View.GONE
+                    ivAuditor.visibility = View.GONE
                     setupScheduler()
                 }
 

@@ -17,15 +17,53 @@
         android:background="@color/colorPrimary"
         android:elevation="4dp">
 
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="18dp"
-            android:paddingTop="36dp"
-            android:paddingEnd="18dp"
-            android:textColor="@color/white"
-            android:textSize="36sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvStatus"
+                style="@style/text.34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="18dp"
+                android:paddingTop="36dp"
+                android:paddingEnd="18dp"
+                android:textColor="@color/white" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivAuditor"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/tvStatus"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="48dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvAuditorName"
+                style="@style/text.24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/ivAuditor"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@id/ivAuditor"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnCalendar"
+                style="@style/button.blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivAuditor"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="24dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="Add to Calendar"
+                android:visibility="gone" />
+        </RelativeLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -64,16 +102,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <View
-            android:id="@+id/disabled"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#A6373737"
-            android:clickable="true"
-            android:elevation="2dp"
-            android:focusable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
