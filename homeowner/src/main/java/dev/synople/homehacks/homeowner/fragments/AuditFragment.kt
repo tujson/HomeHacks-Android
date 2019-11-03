@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.FirebaseFirestore
@@ -83,12 +84,27 @@ class AuditFragment : Fragment() {
                         val statusDateFormat = SimpleDateFormat("EEEE MMM dd h:mm a", Locale.US)
 
                         tvStatus.text =
-                            "You have an audit scheduled for \n" + statusDateFormat.format(audit.scheduledTime)
-                        disabled.visibility = View.VISIBLE
+                            "You have an audit scheduled for: \n" + statusDateFormat.format(audit.scheduledTime)
                     }
+
+                    swipeRefresh.layoutParams =
+                        LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            0,
+                            4.0f
+                        )
+                    clContent.visibility = View.GONE
+                    disabled.visibility = View.VISIBLE
                 } ?: run {
                     audit = null
                     tvStatus.text = "Schedule an audit"
+                    swipeRefresh.layoutParams =
+                        LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            0,
+                            1.0f
+                        )
+                    clContent.visibility = View.VISIBLE
                     disabled.visibility = View.GONE
                     setupScheduler()
                 }

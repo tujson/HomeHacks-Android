@@ -7,24 +7,39 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ViewAuditFragment">
 
-    <TextView
-        android:id="@+id/tvHomeownerName"
-        style="@style/text.34"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivHomeowner"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
+        android:src="@drawable/person"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tvHomeownerName"
+        style="@style/text.34"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivHomeowner"
+        app:layout_constraintTop_toTopOf="@id/ivHomeowner" />
+
+    <TextView
         android:id="@+id/tvAddress"
-        style="@style/text.24"
-        android:layout_width="wrap_content"
+        style="@style/text.20"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="12dp"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivHomeowner"
         app:layout_constraintTop_toBottomOf="@id/tvHomeownerName" />
 
     <Button
@@ -33,9 +48,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="36dp"
         android:text="Navigate"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAddress" />
+        app:layout_constraintTop_toBottomOf="@id/ivHomeowner" />
 
     <Button
         android:id="@+id/btnCalendar"
@@ -43,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="12dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:text="Add to Calendar"

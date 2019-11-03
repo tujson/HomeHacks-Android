@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
 import dev.synople.homehacks.common.models.Audit
 import dev.synople.homehacks.common.models.Question
 
@@ -52,6 +53,16 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
         tvDate.text = sdf.format(audit.performedTime)
         tvAuditorName.text = audit.auditorName
         tvSurveyVersion.text = audit.surveyVersion
+
+        FirebaseStorage.getInstance()
+            .getReference("profilePictures")
+            .child(audit.auditorId)
+            .downloadUrl
+            .addOnSuccessListener {
+                Picasso.get()
+                    .load(it)
+                    .into(ivAuditor)
+            }
 
         // Download survey
         launch {

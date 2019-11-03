@@ -19,11 +19,11 @@ import kotlinx.android.synthetic.main.fragment_view_audit.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 import android.net.Uri
 import android.provider.CalendarContract
+import com.squareup.picasso.Picasso
 import dev.synople.homehacks.common.auditTimeLength
 
 
@@ -54,6 +54,16 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
             btnStartAudit.text = "Upload Audit"
             btnStartAudit.background = ContextCompat.getDrawable(context!!, R.drawable.button_green)
         }
+
+        FirebaseStorage.getInstance()
+            .getReference("profilePictures")
+            .child(audit.homeownerId)
+            .downloadUrl
+            .addOnSuccessListener {
+                Picasso.get()
+                    .load(it)
+                    .into(ivHomeowner)
+            }
 
         btnNavigate.setOnClickListener {
             val gmmIntentUri =

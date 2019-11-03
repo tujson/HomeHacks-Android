@@ -36,8 +36,8 @@ class ResponseAdapter(
             }
 
             containerView.setOnClickListener {
-                containerView.rlDetails.visibility =
-                    if (containerView.rlDetails.visibility == View.GONE) {
+                containerView.gDetails.visibility =
+                    if (containerView.gDetails.visibility == View.GONE) {
                         View.VISIBLE
                     } else {
                         View.GONE
