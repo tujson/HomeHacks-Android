@@ -6,7 +6,8 @@
     android:layout_marginTop="12dp"
     app:cardCornerRadius="4dp">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="12dp">
@@ -16,16 +17,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/black"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignBaseline="@id/tvAuditorName"
-            android:layout_alignParentEnd="true"
-            android:text="April 21"
-            android:textSize="18sp" />
-    </RelativeLayout>
+            android:textSize="18sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvAuditorName"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

@@ -28,7 +28,8 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3">
@@ -36,26 +37,29 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_alignParentTop="true"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:tabMode="scrollable" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vpAvailabilities"
             android:layout_width="match_parent"
-            android:layout_above="@+id/btnContinue"
-            android:layout_below="@+id/tabs"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnContinue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabs" />
 
         <Button
             android:id="@+id/btnContinue"
             style="@style/button.green"
-            android:background="@color/lightGreen"
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:background="@color/lightGreen"
             android:text="Continue"
-            android:layout_height="wrap_content" />
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <View
             android:id="@+id/disabled"
@@ -64,8 +68,10 @@
             android:background="#A6373737"
             android:clickable="true"
             android:elevation="2dp"
-            android:focusable="true" />
-    </RelativeLayout>
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

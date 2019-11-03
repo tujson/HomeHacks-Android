@@ -1,4 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="top"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -6,52 +8,57 @@
         android:id="@+id/tvLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLocation"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
+        android:paddingEnd="12dp"
         android:textColor="@color/black"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
 
     <Button
         android:id="@+id/btnYes"
         style="@style/button.green"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvQuestion"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:text="Yes"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
 
     <Button
         android:id="@+id/btnNo"
         style="@style/button.red"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnYes"
         android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
         android:text="No"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnYes" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilComments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnNo"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="18dp"
-        android:layout_marginEnd="36dp">
+        android:layout_marginEnd="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnNo">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etComments"
@@ -63,21 +70,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvImages"
         android:layout_width="match_parent"
-        android:layout_below="@+id/tilComments"
-        android:layout_marginStart="36dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="32dp"
-        android:layout_height="wrap_content" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilComments" />
 
     <Button
         android:id="@+id/btnAddImage"
         style="@style/button.blue"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:text="Add Image"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:paddingStart="6dp"
         android:paddingEnd="6dp"
-        android:layout_below="@+id/rvImages"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="36dp"/>
+        android:text="Add Image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvImages" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,83 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.SurveyFragment">
+
+    <ImageView
+        android:id="@+id/ivRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/ic_chevron_right"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar"
+        app:layout_constraintStart_toEndOf="@id/progressBar"
+        app:layout_constraintTop_toTopOf="@id/tvProgress" />
+
+    <ImageView
+        android:id="@+id/ivLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/ic_chevron_left"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar"
+        app:layout_constraintEnd_toStartOf="@id/progressBar"
+        app:layout_constraintTop_toTopOf="@id/tvProgress" />
+
+    <TextView
+        android:id="@+id/tvProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Loading..."
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProgress" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpQuestions"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnFinish"
+        app:layout_constraintTop_toBottomOf="@id/progressBar" />
 
     <Button
         android:id="@+id/btnFinish"
         style="@style/button.green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:text="Finish Survey" />
-
-    <ImageView
-        android:id="@+id/ivRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlHeader"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:src="@drawable/ic_chevron_right" />
-
-    <ImageView
-        android:id="@+id/ivLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlHeader"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_chevron_left" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ivLeft"
-        android:layout_alignStart="@id/ivLeft"
-        android:layout_alignEnd="@id/ivRight"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="42dp" />
-
-    <RelativeLayout
-        android:id="@+id/rlHeader"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp">
-
-        <TextView
-            android:id="@+id/tvHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="18dp"
-            android:elevation="5dp"
-            android:gravity="center_vertical"
-            android:textSize="24sp" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tvProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/ivLeft"
-        android:layout_alignBottom="@id/ivLeft"
-        android:layout_toStartOf="@id/ivRight"
-        android:layout_toEndOf="@id/ivLeft"
-        android:gravity="center"
-        android:text="Loading..."
-        android:textSize="18sp" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vpQuestions"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/btnFinish"
-        android:layout_below="@id/progressBar" />
-</RelativeLayout>
+        android:text="Finish Survey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

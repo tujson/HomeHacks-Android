@@ -1,8 +1,5 @@
 package dev.synople.homehacks.auditor.adapters
 
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.LayoutInflater
