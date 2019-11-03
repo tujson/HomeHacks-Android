@@ -9,7 +9,6 @@
     tools:context=".fragments.CalendarFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/relativeLayout4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -28,16 +27,6 @@
             android:textSize="36sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btnStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="18dp"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
-            app:layout_constraintStart_toEndOf="@+id/tvStatus" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

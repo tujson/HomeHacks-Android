@@ -12,13 +12,27 @@ import dev.synople.homehacks.auditor.adapters.AuditAdapter
 import kotlinx.android.synthetic.main.fragment_calendar.*
 
 class CalendarFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) =
         inflater.inflate(R.layout.fragment_calendar, container, false)!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvStatus.text = "Hi, ${AppContext.user.name}!\nYou have ${AppContext.user.scheduledAudits.size} audit(s)"
+        when {
+            AppContext.user.scheduledAudits.size == 0 -> tvStatus.text =
+                "You have no audits scheduled."
+            AppContext.user.scheduledAudits.size == 1 -> tvStatus.text =
+                "Hi, ${AppContext.user.name}!\nYou have ${AppContext.user.scheduledAudits.size} audit scheduled."
+            else -> tvStatus.text =
+                "Hi, ${AppContext.user.name}!\nYou have ${AppContext.user.scheduledAudits.size} audits scheduled."
+        }
+
+        AppContext.user.scheduledAudits =
+            AppContext.user.scheduledAudits.sortedBy { it.scheduledTime }.toMutableList()
 
         val adapter = AuditAdapter(AppContext.user.scheduledAudits) {
             Navigation.findNavController(view).navigate(
@@ -28,7 +42,8 @@ class CalendarFragment : Fragment() {
         rvAudits.adapter = adapter
 
         fab.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_calendarFragment_to_scheduleAuditFragment)
+            Navigation.findNavController(view)
+                .navigate(R.id.action_calendarFragment_to_scheduleAuditFragment)
         }
     }
 }

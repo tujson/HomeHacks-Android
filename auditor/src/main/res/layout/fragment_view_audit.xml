@@ -9,27 +9,50 @@
 
     <TextView
         android:id="@+id/tvHomeownerName"
+        style="@style/text.34"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvAddress"
+        style="@style/text.24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
-        android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvHomeownerName" />
 
     <Button
-        android:id="@+id/btnStartAudit"
+        android:id="@+id/btnNavigate"
         style="@style/button.blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Navigate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAddress" />
+
+    <Button
+        android:id="@+id/btnCalendar"
+        style="@style/button.blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="48dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="Add to Calendar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnNavigate" />
+
+    <Button
+        android:id="@+id/btnStartAudit"
+        style="@style/button.green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"

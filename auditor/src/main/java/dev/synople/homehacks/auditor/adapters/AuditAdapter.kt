@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.synople.homehacks.auditor.R
 import dev.synople.homehacks.common.models.Audit
 import kotlinx.android.extensions.LayoutContainer
+import java.text.SimpleDateFormat
 
 class AuditAdapter(private val audits: MutableList<Audit>, private val itemClick: (Audit) -> Unit) :
     RecyclerView.Adapter<AuditAdapter.ViewHolder>() {
@@ -16,7 +17,10 @@ class AuditAdapter(private val audits: MutableList<Audit>, private val itemClick
         fun bindAudit(audit: Audit) {
             containerView.findViewById<TextView>(R.id.tvHomeownerName).text = audit.homeownerName
             containerView.findViewById<TextView>(R.id.tvAddress).text = audit.address
-            containerView.findViewById<TextView>(R.id.tvDate).text = audit.homeownerName
+
+            val sdf = SimpleDateFormat("MMM dd - h:mm a")
+
+            containerView.findViewById<TextView>(R.id.tvDate).text = sdf.format(audit.scheduledTime)
 
             containerView.setOnClickListener { itemClick(audit) }
         }

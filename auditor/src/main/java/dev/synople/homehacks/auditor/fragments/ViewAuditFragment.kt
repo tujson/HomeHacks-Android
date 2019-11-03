@@ -1,6 +1,7 @@
 package dev.synople.homehacks.auditor.fragments
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
+import android.net.Uri
+import android.provider.CalendarContract
+import dev.synople.homehacks.common.auditTimeLength
+
 
 class ViewAuditFragment : Fragment(), CoroutineScope {
 
@@ -48,6 +53,39 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
         if (audit.responses.isNotEmpty() && audit.responses[0].response.isNotEmpty()) {
             btnStartAudit.text = "Upload Audit"
             btnStartAudit.background = ContextCompat.getDrawable(context!!, R.drawable.button_green)
+        }
+
+        btnNavigate.setOnClickListener {
+            val gmmIntentUri =
+                Uri.parse("geo:0,0?q=${audit.address}")
+            val intent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            intent.setPackage("com.google.android.apps.maps")
+            startActivity(intent)
+        }
+
+        btnCalendar.setOnClickListener {
+            val intent = Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, audit.scheduledTime)
+                .putExtra(
+                    CalendarContract.EXTRA_EVENT_END_TIME,
+                    audit.scheduledTime + (auditTimeLength * 60000)
+                )
+                .putExtra(
+                    CalendarContract.Events.TITLE,
+                    "[HomeHacks] Audit for ${audit.homeownerName}"
+                )
+                .putExtra(
+                    CalendarContract.Events.DESCRIPTION,
+                    "Auditing ${audit.homeownerName}'s home.\nFrom HomeHacks app."
+                )
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, audit.address)
+                .putExtra(
+                    CalendarContract.Events.AVAILABILITY,
+                    CalendarContract.Events.AVAILABILITY_BUSY
+                )
+
+            startActivity(intent)
         }
 
         btnStartAudit.setOnClickListener {
