@@ -19,14 +19,6 @@
             android:textSize="28sp" />
 
         <TextView
-            android:id="@+id/tvQuestions"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tvAuditorName"
-            android:text="47/60"
-            android:textSize="18sp" />
-
-        <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

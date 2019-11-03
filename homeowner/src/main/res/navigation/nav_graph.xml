@@ -35,10 +35,23 @@
         android:id="@+id/historyFragment"
         android:name="dev.synople.homehacks.homeowner.fragments.HistoryFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_viewAuditFragment"
+            app:destination="@id/viewAuditFragment" />
+    </fragment>
     <fragment
         android:id="@+id/auditFragment"
         android:name="dev.synople.homehacks.homeowner.fragments.AuditFragment"
         android:label="fragment_audit"
         tools:layout="@layout/fragment_audit" />
+    <fragment
+        android:id="@+id/viewAuditFragment"
+        android:name="dev.synople.homehacks.homeowner.fragments.ViewAuditFragment"
+        android:label="fragment_view_audit"
+        tools:layout="@layout/fragment_view_audit" >
+        <argument
+            android:name="audit"
+            app:argType="dev.synople.homehacks.common.models.Audit" />
+    </fragment>
 </navigation>
