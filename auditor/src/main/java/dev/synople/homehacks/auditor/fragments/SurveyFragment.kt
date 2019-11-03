@@ -32,6 +32,7 @@ import java.io.File
 import kotlin.coroutines.CoroutineContext
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dev.synople.homehacks.auditor.MainActivity
 import dev.synople.homehacks.auditor.adapters.QuestionAdapter
 import dev.synople.homehacks.common.models.Question
 import dev.synople.homehacks.common.models.Response
@@ -92,6 +93,15 @@ class SurveyFragment : Fragment(), CoroutineScope {
             Navigation.findNavController(view)
                 .navigate(SurveyFragmentDirections.actionSurveyFragmentToViewAuditFragment(audit))
         }
+
+        (activity as MainActivity).findViewById<View>(R.id.bottomNavigationView).visibility =
+            View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (activity as MainActivity).findViewById<View>(R.id.bottomNavigationView).visibility =
+            View.VISIBLE
     }
 
     private fun loadQuestions() {
