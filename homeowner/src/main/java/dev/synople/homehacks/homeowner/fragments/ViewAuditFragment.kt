@@ -2,6 +2,7 @@ package dev.synople.homehacks.homeowner.fragments
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import kotlin.coroutines.CoroutineContext
 
@@ -62,13 +64,22 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
                 Picasso.get()
                     .load(it)
                     .into(ivAuditor)
+            }.addOnFailureListener {
+                Log.e(
+                    "ViewAuditFragment",
+                    "FirebaseStorage - Retrieving auditor profile picture",
+                    it
+                )
             }
 
         // Download survey
         launch {
             val tempFile = File.createTempFile("questions", "json")
-            FirebaseStorage.getInstance().getReference("surveys/${audit.surveyVersion}.json")
-                .getFile(tempFile).await()
+            Log.v("ViewAuditFragment", audit.surveyVersion + ".json")
+            FirebaseStorage.getInstance().reference
+                .child("surveys/${audit.surveyVersion}.json")
+                .getFile(tempFile)
+                .await()
 
             val text = tempFile.readText()
             val listType = object : TypeToken<ArrayList<Question>>() {

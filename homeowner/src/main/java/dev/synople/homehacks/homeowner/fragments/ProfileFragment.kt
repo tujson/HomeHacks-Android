@@ -16,6 +16,7 @@ import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import dev.synople.homehacks.homeowner.AppContext
 
 import dev.synople.homehacks.homeowner.R
@@ -42,6 +43,17 @@ class ProfileFragment : Fragment() {
 
         // TODO: Add PlacePicker instead of etAddress
         // TODO: Maybe add map view?
+
+        FirebaseStorage.getInstance().getReference("profilePictures")
+            .child(AppContext.user.id)
+            .downloadUrl
+            .addOnSuccessListener {
+                Picasso.get()
+                    .load(it)
+                    .into(ivProfile)
+            }.addOnFailureListener {
+                Log.e("ProfileFragment", "FirebaseStorage loading profile picture", it)
+            }
 
         ivProfile.setOnClickListener {
             val getIntent = Intent(Intent.ACTION_GET_CONTENT)

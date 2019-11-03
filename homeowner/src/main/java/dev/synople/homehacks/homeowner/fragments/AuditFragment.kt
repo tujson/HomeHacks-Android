@@ -4,6 +4,7 @@ package dev.synople.homehacks.homeowner.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -138,6 +139,12 @@ class AuditFragment : Fragment() {
                                 Picasso.get()
                                     .load(it)
                                     .into(ivAuditor)
+                            }.addOnFailureListener {
+                                Log.e(
+                                    "AuditFragment",
+                                    "FirebaseStorage retrieving auditor profile picture",
+                                    it
+                                )
                             }
                     }
                 } ?: run {

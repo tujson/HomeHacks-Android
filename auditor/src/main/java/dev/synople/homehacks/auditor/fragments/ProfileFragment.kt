@@ -42,18 +42,16 @@ class ProfileFragment : Fragment() {
 
         etName.setText(AppContext.user.name)
 
-        try {
-            FirebaseStorage.getInstance().getReference("profilePictures")
-                .child(AppContext.user.id)
-                .downloadUrl
-                .addOnSuccessListener {
-                    Picasso.get()
-                        .load(it)
-                        .into(ivProfile)
-                }
-        } catch (e: Exception) {
-            Log.e("ProfileFragment", "FirebaseStorage loading profile picture", e)
-        }
+        FirebaseStorage.getInstance().getReference("profilePictures")
+            .child(AppContext.user.id)
+            .downloadUrl
+            .addOnSuccessListener {
+                Picasso.get()
+                    .load(it)
+                    .into(ivProfile)
+            }.addOnFailureListener {
+                Log.e("ProfileFragment", "FirebaseStorage loading profile picture", it)
+            }
 
         ivProfile.setOnClickListener {
             val getIntent = Intent(Intent.ACTION_GET_CONTENT)
