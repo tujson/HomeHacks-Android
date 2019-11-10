@@ -16,15 +16,12 @@ import dev.synople.homehacks.auditor.AppContext
 import dev.synople.homehacks.auditor.R
 import dev.synople.homehacks.common.models.Audit
 import kotlinx.android.synthetic.main.fragment_view_audit.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 import android.net.Uri
 import android.provider.CalendarContract
 import com.squareup.picasso.Picasso
 import dev.synople.homehacks.common.auditTimeLength
+import kotlinx.coroutines.*
 
 
 class ViewAuditFragment : Fragment(), CoroutineScope {
@@ -103,21 +100,21 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
                 AppContext.user.scheduledAudits.clear()
 
                 launch {
-                    withContext(Dispatchers.IO) {
+                    val auditorsTask = async {
                         FirebaseFirestore.getInstance()
                             .collection("auditors")
                             .document(AppContext.user.id)
                             .set(AppContext.user)
                     }
 
-                    withContext(Dispatchers.IO) {
+                    val pendingAuditsTask = async {
                         FirebaseFirestore.getInstance()
                             .collection("pendingAudits")
                             .document(audit.homeownerId)
                             .delete()
                     }
 
-                    withContext(Dispatchers.IO) {
+                    val auditsTask = async {
                         FirebaseFirestore.getInstance()
                             .collection("audits")
                             .document(audit.homeownerId)
@@ -126,7 +123,7 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
                             .set(audit)
                     }
 
-                    withContext(Dispatchers.IO) {
+                    val imagesTask = async {
                         audit.responses.forEach { response ->
 
                             for (i in 0 until response.images.size) {
@@ -136,6 +133,11 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
                             }
                         }
                     }
+
+                    auditorsTask.await()
+                    pendingAuditsTask.await()
+                    auditsTask.await()
+                    imagesTask.await()
 
                     Navigation.findNavController(view)
                         .navigate(R.id.action_viewAuditFragment_to_calendarFragment)

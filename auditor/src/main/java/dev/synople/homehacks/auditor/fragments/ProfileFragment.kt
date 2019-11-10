@@ -28,8 +28,6 @@ import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
 
-    val PICK_IMAGE = 1
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -111,5 +109,9 @@ class ProfileFragment : Fragment() {
                     ivProfile.setImageBitmap(resizedBitmap)
                 }
         }
+    }
+
+    companion object {
+        private const val PICK_IMAGE = 1
     }
 }

@@ -17,13 +17,23 @@ import dev.synople.homehacks.auditor.R
 import dev.synople.homehacks.auditor.adapters.AuditAdapter
 import dev.synople.homehacks.common.models.Audit
 import kotlinx.android.synthetic.main.fragment_schedule_audit.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
+import kotlin.coroutines.CoroutineContext
 
-class ScheduleAuditFragment : Fragment() {
+class ScheduleAuditFragment : Fragment(), CoroutineScope {
 
     private val availableAudits = mutableListOf<Audit>()
     private lateinit var adapter: AuditAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) =
         inflater.inflate(R.layout.fragment_schedule_audit, container, false)!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,20 +44,34 @@ class ScheduleAuditFragment : Fragment() {
                 .setPositiveButton("Yes") { _, _ ->
                     audit.auditorId = AppContext.user.id
                     audit.auditorName = AppContext.user.name
+                    AppContext.user.scheduledAudits.add(audit)
 
-                    FirebaseFirestore.getInstance().collection("pendingAudits").document(audit.homeownerId)
-                        .update("auditorId", AppContext.user.id, "auditorName", AppContext.user.name)
-                        .addOnSuccessListener {
-
-                            AppContext.user.scheduledAudits.add(audit)
-                            FirebaseFirestore.getInstance().collection("auditors").document(AppContext.user.id)
-                                .set(AppContext.user)
-                                .addOnSuccessListener {
-                                    Navigation.findNavController(view)
-                                        .navigate(R.id.action_scheduleAuditFragment_to_calendarFragment)
-                                }
+                    launch {
+                        val pendingAudit = async {
+                            FirebaseFirestore.getInstance()
+                                .collection("pendingAudits")
+                                .document(audit.homeownerId)
+                                .update(
+                                    "auditorId",
+                                    AppContext.user.id,
+                                    "auditorName",
+                                    AppContext.user.name
+                                )
                         }
 
+                        val auditorsUpdate = async {
+                            FirebaseFirestore.getInstance()
+                                .collection("auditors")
+                                .document(AppContext.user.id)
+                                .set(AppContext.user)
+                        }
+
+                        pendingAudit.await()
+                        auditorsUpdate.await()
+
+                        Navigation.findNavController(view)
+                            .navigate(R.id.action_scheduleAuditFragment_to_calendarFragment)
+                    }
                 }
                 .setNegativeButton("No") { _, _ -> }
                 .show()
@@ -61,7 +85,8 @@ class ScheduleAuditFragment : Fragment() {
         retrieveAvailableAudits()
 
         tvLbl.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_scheduleAuditFragment_to_calendarFragment)
+            Navigation.findNavController(view)
+                .navigate(R.id.action_scheduleAuditFragment_to_calendarFragment)
         }
     }
 

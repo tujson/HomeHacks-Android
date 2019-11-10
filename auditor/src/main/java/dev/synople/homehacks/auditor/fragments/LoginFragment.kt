@@ -22,8 +22,6 @@ const val RC_SIGN_IN = 1
 
 class LoginFragment : Fragment() {
 
-    private val TAG = "Auditor LoginFragment"
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,9 +68,9 @@ class LoginFragment : Fragment() {
                         .show()
                 }
             }.addOnFailureListener {
-            Log.e(TAG, "Retrieve Auditor from database", it)
-            Toast.makeText(context, "Error retrieving Auditor", Toast.LENGTH_SHORT).show()
-        }
+                Log.e(LoginFragment::class.java.simpleName, "Retrieve Auditor from database", it)
+                Toast.makeText(context, "Error retrieving Auditor", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -84,6 +82,11 @@ class LoginFragment : Fragment() {
                     retrieveAuditor(it.uid)
                 }
             } else {
+                Toast.makeText(
+                    context,
+                    "Sign-in failed. Please try again later.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }

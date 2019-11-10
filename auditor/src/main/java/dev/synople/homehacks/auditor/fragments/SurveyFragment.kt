@@ -44,7 +44,6 @@ import kotlin.collections.ArrayList
 
 class SurveyFragment : Fragment(), CoroutineScope {
 
-    private val REQUEST_IMAGE_CAPTURE = 1
     private var currentPhotoUri: Uri = Uri.EMPTY
     private var currentPhotoFileName: String = ""
 
@@ -161,7 +160,7 @@ class SurveyFragment : Fragment(), CoroutineScope {
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
                             startActivityForResult(
                                 takePictureIntent,
-                                REQUEST_IMAGE_CAPTURE
+                                Companion.REQUEST_IMAGE_CAPTURE
                             )
                         }
                     }
@@ -183,10 +182,14 @@ class SurveyFragment : Fragment(), CoroutineScope {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == Companion.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             responses[vpQuestions.currentItem].imageUris.add(currentPhotoUri)
             responses[vpQuestions.currentItem].images.add(currentPhotoFileName)
             vpQuestions.adapter?.notifyItemChanged(vpQuestions.currentItem)
         }
+    }
+
+    companion object {
+        private val REQUEST_IMAGE_CAPTURE = 1
     }
 }

@@ -22,14 +22,7 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        when {
-            AppContext.user.scheduledAudits.size == 0 -> tvStatus.text =
-                "You have no audits scheduled."
-            AppContext.user.scheduledAudits.size == 1 -> tvStatus.text =
-                "Hi, ${AppContext.user.name}!\nYou have ${AppContext.user.scheduledAudits.size} audit scheduled."
-            else -> tvStatus.text =
-                "Hi, ${AppContext.user.name}!\nYou have ${AppContext.user.scheduledAudits.size} audits scheduled."
-        }
+        tvStatus.text = getStatusText()
 
         AppContext.user.scheduledAudits =
             AppContext.user.scheduledAudits.sortedBy { it.scheduledTime }.toMutableList()
@@ -44,6 +37,14 @@ class CalendarFragment : Fragment() {
         fab.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R.id.action_calendarFragment_to_scheduleAuditFragment)
+        }
+    }
+
+    private fun getStatusText(): String {
+        return when {
+            AppContext.user.scheduledAudits.size == 0 -> "You have no audits scheduled."
+            AppContext.user.scheduledAudits.size == 1 -> "Hi, ${AppContext.user.name}!\nYou have ${AppContext.user.scheduledAudits.size} audit scheduled."
+            else -> "Hi, ${AppContext.user.name}!\nYou have ${AppContext.user.scheduledAudits.size} audits scheduled."
         }
     }
 }
