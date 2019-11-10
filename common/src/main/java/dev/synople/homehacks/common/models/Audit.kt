@@ -13,7 +13,7 @@ data class Audit(
     var address: String = "",
     var surveyVersion: String = "",
     var responses: MutableList<Response> = mutableListOf(),
-    var availabilities: MutableList<Long> = mutableListOf(), // Epoch time. Value indicates possible audit start time. Audits are of length auditTimeLength long.
+    var availabilities: MutableList<Long> = mutableListOf(), // Epoch time. Value indicates possible audit start time. Audits are of length AUDIT_TIME_LENGTH long.
     var scheduledTime: Long = 0, // When this audit is scheduled for
     var performedTime: Long = 0 // When this audit is performed
 ) : Parcelable

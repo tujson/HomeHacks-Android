@@ -39,7 +39,6 @@ class HistoryFragment : Fragment() {
 
         swipeRefresh.isRefreshing = true
         swipeRefresh.setOnRefreshListener { retrieveAudits() }
-
         retrieveAudits()
     }
 

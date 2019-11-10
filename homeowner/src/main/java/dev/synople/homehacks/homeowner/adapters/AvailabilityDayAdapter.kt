@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import dev.synople.homehacks.common.auditEndTime
-import dev.synople.homehacks.common.auditStartTime
-import dev.synople.homehacks.common.auditTimeLength
+import dev.synople.homehacks.common.AUDIT_END_TIME
+import dev.synople.homehacks.common.AUDIT_START_TIME
+import dev.synople.homehacks.common.AUDIT_TIME_LENGTH
 import dev.synople.homehacks.homeowner.R
 import kotlinx.android.extensions.LayoutContainer
 import java.text.SimpleDateFormat
@@ -31,7 +31,7 @@ class AvailabilityDayAdapter(
         holder.bindAvailability(availabilities, position, currDate)
     }
 
-    override fun getItemCount() = (auditEndTime - auditStartTime) * (60 / auditTimeLength) + 1
+    override fun getItemCount() = (AUDIT_END_TIME - AUDIT_START_TIME) * (60 / AUDIT_TIME_LENGTH) + 1
 }
 
 class AvailabilityDayViewHolder internal constructor(override val containerView: View) :
@@ -41,11 +41,11 @@ class AvailabilityDayViewHolder internal constructor(override val containerView:
 
     fun bindAvailability(availabilities: MutableList<Long>, position: Int, currDate: Calendar) {
         val startTime = currDate.clone() as Calendar
-        startTime.set(Calendar.HOUR_OF_DAY, auditStartTime)
+        startTime.set(Calendar.HOUR_OF_DAY, AUDIT_START_TIME)
         startTime.set(Calendar.MINUTE, 0)
         startTime.set(Calendar.SECOND, 0)
         startTime.set(Calendar.MILLISECOND, 0)
-        startTime.add(Calendar.MINUTE, position * auditTimeLength)
+        startTime.add(Calendar.MINUTE, position * AUDIT_TIME_LENGTH)
         containerView.findViewById<TextView>(R.id.tvDay).text = dateFormat.format(startTime.time)
 
         if (availabilities.contains(startTime.timeInMillis)) {

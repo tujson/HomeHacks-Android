@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dev.synople.homehacks.common.auditLookahead
+import dev.synople.homehacks.common.AUDIT_LOOKAHEAD
 import dev.synople.homehacks.homeowner.R
 import kotlinx.android.extensions.LayoutContainer
 import java.util.*
@@ -27,7 +27,7 @@ class AvailabilityAdapter(
         holder.bindAvailability(availabilities, position)
     }
 
-    override fun getItemCount() = auditLookahead
+    override fun getItemCount() = AUDIT_LOOKAHEAD
 
     fun getAllItems() = availabilities
 }

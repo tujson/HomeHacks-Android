@@ -56,19 +56,7 @@ class ProfileFragment : Fragment() {
             }
 
         ivProfile.setOnClickListener {
-            val getIntent = Intent(Intent.ACTION_GET_CONTENT)
-            getIntent.type = "image/*"
-
-            val pickIntent = Intent(
-                Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            )
-            pickIntent.type = "image/*"
-
-            val chooserIntent = Intent.createChooser(getIntent, "Select profile picture")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
-
-            startActivityForResult(chooserIntent, PICK_IMAGE)
+            pickImage()
         }
 
         btnSave.setOnClickListener {
@@ -88,6 +76,22 @@ class ProfileFragment : Fragment() {
             Navigation.findNavController(it)
                 .navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFragment())
         }
+    }
+
+    private fun pickImage() {
+        val getIntent = Intent(Intent.ACTION_GET_CONTENT)
+        getIntent.type = "image/*"
+
+        val pickIntent = Intent(
+            Intent.ACTION_PICK,
+            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+        pickIntent.type = "image/*"
+
+        val chooserIntent = Intent.createChooser(getIntent, "Select profile picture")
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
+
+        startActivityForResult(chooserIntent, PICK_IMAGE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

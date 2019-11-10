@@ -20,7 +20,7 @@ import kotlin.coroutines.CoroutineContext
 import android.net.Uri
 import android.provider.CalendarContract
 import com.squareup.picasso.Picasso
-import dev.synople.homehacks.common.auditTimeLength
+import dev.synople.homehacks.common.AUDIT_TIME_LENGTH
 import kotlinx.coroutines.*
 
 
@@ -76,7 +76,7 @@ class ViewAuditFragment : Fragment(), CoroutineScope {
                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, audit.scheduledTime)
                 .putExtra(
                     CalendarContract.EXTRA_EVENT_END_TIME,
-                    audit.scheduledTime + (auditTimeLength * 60000)
+                    audit.scheduledTime + (AUDIT_TIME_LENGTH * 60000)
                 )
                 .putExtra(
                     CalendarContract.Events.TITLE,

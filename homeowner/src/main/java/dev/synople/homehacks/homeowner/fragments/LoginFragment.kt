@@ -83,6 +83,11 @@ class LoginFragment : Fragment() {
                     retrieveUser(it.uid)
                 }
             } else {
+                Toast.makeText(
+                    context,
+                    "Sign-in failed. Please try again later.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }

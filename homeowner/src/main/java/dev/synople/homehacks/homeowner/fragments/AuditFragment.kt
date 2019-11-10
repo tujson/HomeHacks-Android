@@ -14,7 +14,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
-import dev.synople.homehacks.common.auditTimeLength
+import dev.synople.homehacks.common.SURVEY_VERSION
+import dev.synople.homehacks.common.AUDIT_TIME_LENGTH
 import dev.synople.homehacks.common.models.Audit
 import dev.synople.homehacks.homeowner.AppContext
 import dev.synople.homehacks.homeowner.R
@@ -51,28 +52,7 @@ class AuditFragment : Fragment() {
 
         btnCalendar.setOnClickListener {
             audit?.let { audit ->
-                val intent = Intent(Intent.ACTION_INSERT)
-                    .setData(CalendarContract.Events.CONTENT_URI)
-                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, audit.scheduledTime)
-                    .putExtra(
-                        CalendarContract.EXTRA_EVENT_END_TIME,
-                        audit.scheduledTime + (auditTimeLength * 60000)
-                    )
-                    .putExtra(
-                        CalendarContract.Events.TITLE,
-                        "[HomeHacks] Audit from ${audit.auditorName}"
-                    )
-                    .putExtra(
-                        CalendarContract.Events.DESCRIPTION,
-                        "Audit from ${audit.auditorName}.\nFrom HomeHacks app."
-                    )
-                    .putExtra(CalendarContract.Events.EVENT_LOCATION, audit.address)
-                    .putExtra(
-                        CalendarContract.Events.AVAILABILITY,
-                        CalendarContract.Events.AVAILABILITY_BUSY
-                    )
-
-                startActivity(intent)
+                createCalendarEvent(audit)
             }
         }
 
@@ -84,7 +64,7 @@ class AuditFragment : Fragment() {
                 AppContext.user.id,
                 AppContext.user.name,
                 AppContext.user.address,
-                "v1",
+                SURVEY_VERSION,
                 mutableListOf(),
                 (vpAvailabilities.adapter as AvailabilityAdapter).getAllItems()
             )
@@ -97,6 +77,31 @@ class AuditFragment : Fragment() {
                     tvStatus.text = "You have an audit pending assignment"
                 }
         }
+    }
+
+    private fun createCalendarEvent(audit: Audit) {
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, audit.scheduledTime)
+            .putExtra(
+                CalendarContract.EXTRA_EVENT_END_TIME,
+                audit.scheduledTime + (AUDIT_TIME_LENGTH * 60000)
+            )
+            .putExtra(
+                CalendarContract.Events.TITLE,
+                "[HomeHacks] Audit from ${audit.auditorName}"
+            )
+            .putExtra(
+                CalendarContract.Events.DESCRIPTION,
+                "Audit from ${audit.auditorName}.\nFrom HomeHacks app."
+            )
+            .putExtra(CalendarContract.Events.EVENT_LOCATION, audit.address)
+            .putExtra(
+                CalendarContract.Events.AVAILABILITY,
+                CalendarContract.Events.AVAILABILITY_BUSY
+            )
+
+        startActivity(intent)
     }
 
     private fun fetchPendingAudit() {
