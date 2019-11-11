@@ -62,7 +62,7 @@ class LoginFragment : Fragment() {
                 } ?: run {
                     Toast.makeText(
                         context,
-                        "Auditor not found. Please contact an admin to register.",
+                        R.string.auditor_login_not_found,
                         Toast.LENGTH_LONG
                     )
                         .show()
