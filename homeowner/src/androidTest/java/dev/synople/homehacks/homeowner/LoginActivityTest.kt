@@ -52,27 +52,6 @@ class LoginActivityTest {
         )
         supportVectorDrawablesButton.perform(scrollTo(), click())
 
-////        val idlingResource = ElapsedTimeIdlingResource(1000)
-////        IdlingRegistry.getInstance().register(idlingResource)
-//        Thread.sleep(5000)
-//
-//        val editText = onView(
-//            allOf(
-//                withId(R.id.email), withText("Email"),
-//                childAtPosition(
-//                    childAtPosition(
-//                        withId(R.id.email_layout),
-//                        0
-//                    ),
-//                    0
-//                ),
-//                isDisplayed()
-//            )
-//        )
-//        editText.check(matches(isDisplayed()))
-//
-////        IdlingRegistry.getInstance().unregister(idlingResource)
-
         val textInputEditText = onView(
             allOf(
                 withId(R.id.email),
