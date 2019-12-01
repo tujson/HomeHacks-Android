@@ -10,12 +10,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:paddingBottom="12dp">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/gDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:constraint_referenced_ids="hr,tvComments" />
 
         <TextView
@@ -25,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +36,6 @@
             style="@style/text.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="12dp"
             app:layout_constraintStart_toStartOf="@id/tvQuestion"
             app:layout_constraintTop_toBottomOf="@id/tvQuestion" />
 
@@ -41,10 +43,10 @@
             android:id="@+id/hr"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="@color/gray"
-            android:visibility="gone"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="12dp"
+            android:background="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvResponse" />
@@ -54,8 +56,7 @@
             style="@style/text.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:visibility="gone"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="@id/tvQuestion"
             app:layout_constraintTop_toBottomOf="@id/hr" />
 

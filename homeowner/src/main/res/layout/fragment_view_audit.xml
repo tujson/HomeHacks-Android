@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/tvAuditorName"
-            style="@style/text.18"
+            style="@style/text.bold.22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/ivAuditor"
@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/tvDate"
-            style="@style/text.bold.36"
+            style="@style/text.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/ivAuditor"
