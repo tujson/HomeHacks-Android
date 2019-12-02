@@ -88,6 +88,7 @@ class SurveyFragment : Fragment(), CoroutineScope {
 
         btnFinish.setOnClickListener {
             audit.responses = responses
+            audit.performedTime = System.currentTimeMillis()
 
             Navigation.findNavController(view)
                 .navigate(SurveyFragmentDirections.actionSurveyFragmentToViewAuditFragment(audit))

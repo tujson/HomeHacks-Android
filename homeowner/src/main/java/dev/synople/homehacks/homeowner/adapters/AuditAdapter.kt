@@ -19,7 +19,7 @@ class AuditAdapter(private val audits: MutableList<Audit>, private val itemClick
 
             containerView.tvAuditorName.text = audit.auditorName
             val df = SimpleDateFormat("MMM dd")
-            containerView.tvDate.text = df.format(Date(audit.scheduledTime))
+            containerView.tvDate.text = df.format(Date(audit.performedTime))
 
             containerView.setOnClickListener { itemClick(audit) }
         }
